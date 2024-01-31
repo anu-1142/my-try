@@ -1,0 +1,58 @@
+let n=20;
+let num=prompt('Enter a numer')
+if(num>0) {
+    console.log(" The number is Positive.");
+}else {
+    console.log(" The number is Negative.");
+}
+if (num%2==0) {
+    console.log(" The number is even.");
+}else {
+    console.log(" The number is odd.");
+}
+let number=8;
+let h= (number*(number+1))/2;
+console.log(h);
+console.log("the addition of first ",num ,"natural number is ", h);
+let seadd=0;
+for(let i=2; i<5;i++) {
+    seadd+=i;
+}
+console.log("addition of natural numbers range 2 to 4",seadd);
+let num2=30;
+if (num>num2) {
+    console.log('greatest',num);
+}else {
+    console.log('greatest',num2);
+}
+console.log(Math.max(num,num2));
+let a=6,b=3,c=8;
+console.log("3 num greater",a>b ?a : b>c? b:c)
+let p=1,np=22;
+let count=0;
+if (p<2) {
+    console.log(p,"not a prime");
+}else {
+    for(let i=1;i<=p;i++) {
+        if(p%i==0) {
+            count+=1;
+        }
+    }
+    console.log(count);
+    if(count>2) {
+        console.log(p,"not a prime 33");
+    }else {
+        console.log(p," prime");
+    }
+}
+let fn=2,ln=10;
+let digit=123;
+var digits=0;
+let m=digit.toString().split('');
+console.log(m)
+console.log(m.reverse())
+m.forEach((item) =>{
+    digits+=parseInt(item);
+})
+    console.log(digits,'range of prime numbers');
+    

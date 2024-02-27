@@ -23,6 +23,26 @@
                     font-weight: bold;
                 }
 
+                #delete-btn {
+                    background-color: white;
+                    color: #5f9341;
+                    border: 1px solid;
+                }
+                /* STYLE THE LIST ACCORDING TO THE DESIGN */
+                ul {
+                    margin-top: 20px;
+                    list-style: none;
+                    padding-left: 0;
+                }
+
+                li {
+                    margin-top: 5px;
+                }
+
+                a {
+                    color: #5f9341;
+                }
+
         </style>
     </head>
     <body>
@@ -30,29 +50,62 @@
         <input id="input-el" type="text" />
         <!-- Create a SAVE INPUT button with id="input-btn" -->
         <button id="input-btn">SAVE</button>
+        <button id="tab-btn">SAVE TAB</button>
+        <button id="delete-btn">DELETE ALL</button>
+        <ul id="ul-el"></ul>
         <script>
-            let myLeads = ["www.awesomelead.com", "www.epiclead.com", "www.greatlead.com"]
+            let myLeads = []
             const inputEl = document.getElementById("input-el")
             const inputBtn = document.getElementById("input-btn")
             const ulEl = document.getElementById("ul-el")
+            const deleteBtn = document.getElementById("delete-btn")
+            const leadsFromLocalStorage = JSON.parse( localStorage.getItem("myLeads") )
+            const tabBtn = document.getElementById("tab-btn")
+
+            if (leadsFromLocalStorage) {
+                myLeads = leadsFromLocalStorage
+                render(myLeads)
+            }
+
+            tabBtn.addEventListener("click", function(){    
+                chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+                    myLeads.push(tabs[0].url)
+                    localStorage.setItem("myLeads", JSON.stringify(myLeads) )
+                    render(myLeads)
+                })
+            })
+
+            function render(leads) {
+                let listItems = ""
+                for (let i = 0; i < leads.length; i++) {
+                    listItems += `
+                        <li>
+                            <a target='_blank' href='${leads[i]}'>
+                                ${leads[i]}
+                            </a>
+                        </li>
+                    `
+                }
+                ulEl.innerHTML = listItems
+            }
+
+            deleteBtn.addEventListener("dblclick", function() {
+                localStorage.clear()
+                myLeads = []
+                render(myLeads)
+            })
 
             inputBtn.addEventListener("click", function() {
                 myLeads.push(inputEl.value)
-                console.log(myLeads)
+                inputEl.value = ""
+                localStorage.setItem("myLeads", JSON.stringify(myLeads) )
+                render(myLeads)
             })
 
-            // 1. Create a variable, listItems, to hold all the HTML for the list items
-            // Assign it to an empty string to begin with
-            let listItems = 
-            for (let i = 0; i < myLeads.length; i++) {
-                // 2. Add the item to the listItems variable instead of the ulEl.innerHTML
-                ulEl.innerHTML += "<li>" + myLeads[i] + "</li>"
-            }
-            // 3. Render the listItems inside the unordered list using ulEl.innerHTML
 
-
-
-
+//             d
+// y
+// g
         </script>
     </body>
 </html>
